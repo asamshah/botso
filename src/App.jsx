@@ -1,75 +1,92 @@
-import { useState } from 'react'
-import { supabase } from './lib/supabase'
-import LeftSidebar from './components/LeftSidebar/LeftSidebar'
-import Calendar from './components/Calendar/Calendar'
-import RightSidebar from './components/RightSidebar/RightSidebar'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { AuthProvider, useAuth } from './context/AuthContext'
+import Landing from './pages/Landing/Landing'
+import Auth from './pages/Auth/Auth'
+import Journal from './pages/Journal/Journal'
 
-function App() {
-  const [selectedDate, setSelectedDate] = useState(new Date())
-  const [refreshKey, setRefreshKey] = useState(0)
-  const [searchQuery, setSearchQuery] = useState('')
-  const [selectedTags, setSelectedTags] = useState([])
+function ProtectedRoute({ children }) {
+  const { user, loading } = useAuth()
 
-  const handleDateSelect = (date) => {
-    setSelectedDate(date)
-    // Scroll right sidebar to top
-    const rightSidebar = document.querySelector('.right-sidebar')
-    if (rightSidebar) {
-      rightSidebar.scrollTo({ top: 0, behavior: 'smooth' })
-    }
-  }
-
-  const handleEntryAdded = () => {
-    setRefreshKey(prev => prev + 1)
-  }
-
-  const handleTagSelect = (tag) => {
-    setSelectedTags(prev =>
-      prev.includes(tag)
-        ? prev.filter(t => t !== tag)
-        : [...prev, tag]
+  if (loading) {
+    return (
+      <div className="loading-screen">
+        <div className="loading-spinner"></div>
+      </div>
     )
   }
 
-  const handleEntryDateChange = async (entryId, newDate) => {
-    const { error } = await supabase
-      .from('entries')
-      .update({ date: newDate })
-      .eq('id', entryId)
-
-    if (!error) {
-      setRefreshKey(prev => prev + 1)
-    } else {
-      console.error('Error updating entry date:', error)
-    }
+  if (!user) {
+    return <Navigate to="/login" replace />
   }
 
+  return children
+}
+
+function PublicRoute({ children }) {
+  const { user, loading } = useAuth()
+
+  if (loading) {
+    return (
+      <div className="loading-screen">
+        <div className="loading-spinner"></div>
+      </div>
+    )
+  }
+
+  if (user) {
+    return <Navigate to="/app" replace />
+  }
+
+  return children
+}
+
+function AppRoutes() {
   return (
-    <div className="app">
-      <LeftSidebar
-        searchQuery={searchQuery}
-        onSearchChange={setSearchQuery}
-        selectedTags={selectedTags}
-        onTagSelect={handleTagSelect}
-        refreshKey={refreshKey}
-        onReminderClick={(date) => setSelectedDate(new Date(date + 'T00:00:00'))}
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <PublicRoute>
+            <Landing />
+          </PublicRoute>
+        }
       />
-      <Calendar
-        selectedDate={selectedDate}
-        onDateSelect={handleDateSelect}
-        refreshKey={refreshKey}
-        onEntryAdded={handleEntryAdded}
-        onEntryDateChange={handleEntryDateChange}
+      <Route
+        path="/login"
+        element={
+          <PublicRoute>
+            <Auth />
+          </PublicRoute>
+        }
       />
-      <RightSidebar
-        selectedDate={selectedDate}
-        refreshKey={refreshKey}
-        onEntryUpdated={handleEntryAdded}
-        searchQuery={searchQuery}
-        selectedTags={selectedTags}
-        onPostClick={(date) => setSelectedDate(new Date(date + 'T00:00:00'))}
+      <Route
+        path="/signup"
+        element={
+          <PublicRoute>
+            <Auth />
+          </PublicRoute>
+        }
       />
-    </div>
+      <Route
+        path="/app"
+        element={
+          <ProtectedRoute>
+            <Journal />
+          </ProtectedRoute>
+        }
+      />
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
+  )
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <AuthProvider>
+        <AppRoutes />
+      </AuthProvider>
+    </BrowserRouter>
   )
 }
 

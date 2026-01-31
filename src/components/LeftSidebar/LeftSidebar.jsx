@@ -9,7 +9,7 @@ const DEFAULT_PROFILE = {
   avatar_url: null
 }
 
-function LeftSidebar({ searchQuery, onSearchChange, selectedTags, onTagSelect, refreshKey, onReminderClick }) {
+function LeftSidebar({ searchQuery, onSearchChange, selectedTags, onTagSelect, refreshKey, onReminderClick, onSignOut }) {
   const [profile, setProfile] = useState(DEFAULT_PROFILE)
   const [allTags, setAllTags] = useState([])
   const [reminders, setReminders] = useState([])
@@ -73,10 +73,17 @@ function LeftSidebar({ searchQuery, onSearchChange, selectedTags, onTagSelect, r
 
   async function fetchProfile() {
     try {
+      // Get current user
+      const { data: { user } } = await supabase.auth.getUser()
+      if (!user) {
+        setProfileLoaded(true)
+        return
+      }
+
       const { data, error } = await supabase
         .from('profiles')
         .select('*')
-        .limit(1)
+        .eq('user_id', user.id)
         .single()
 
       if (data && !error) {
@@ -84,10 +91,10 @@ function LeftSidebar({ searchQuery, onSearchChange, selectedTags, onTagSelect, r
         setEditName(data.name)
         setEditBio(data.bio || '')
       } else {
-        // If no profile exists, create one with defaults
+        // Profile should be auto-created by trigger, but create if missing
         const { data: newProfile, error: createError } = await supabase
           .from('profiles')
-          .insert([DEFAULT_PROFILE])
+          .insert([{ ...DEFAULT_PROFILE, user_id: user.id }])
           .select()
           .single()
 
@@ -345,6 +352,17 @@ function LeftSidebar({ searchQuery, onSearchChange, selectedTags, onTagSelect, r
           </div>
         </div>
       )}
+
+      <div className="sidebar-footer">
+        <button className="sign-out-btn" onClick={onSignOut}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+            <polyline points="16 17 21 12 16 7"/>
+            <line x1="21" y1="12" x2="9" y2="12"/>
+          </svg>
+          Sign out
+        </button>
+      </div>
     </aside>
   )
 }

@@ -33,11 +33,19 @@ export function useEntries(selectedDate) {
   }, [fetchEntries])
 
   const addEntry = async (entryData) => {
+    // Get current user
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) {
+      setError('Not authenticated')
+      return false
+    }
+
     const { error: insertError } = await supabase
       .from('entries')
       .insert({
         ...entryData,
-        date: format(selectedDate, 'yyyy-MM-dd')
+        date: format(selectedDate, 'yyyy-MM-dd'),
+        user_id: user.id
       })
 
     if (insertError) {
