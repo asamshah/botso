@@ -1,0 +1,63 @@
+.activity-grid {
+  padding: var(--spacing-md);
+  background-color: var(--bg-secondary);
+  border-radius: 0;
+}
+
+.activity-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-sm);
+}
+
+.grid-container {
+  display: flex;
+  gap: 3px;
+  overflow-x: auto;
+}
+
+.grid-week {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.grid-cell {
+  width: 10px;
+  height: 10px;
+  border-radius: 0;
+  transition: transform 0.1s;
+}
+
+.grid-cell:hover:not(.empty) {
+  transform: scale(1.3);
+}
+
+.grid-cell.empty {
+  visibility: hidden;
+}
+
+.grid-cell[data-activity="0"] {
+  background-color: var(--activity-0);
+}
+
+.grid-cell[data-activity="1"] {
+  background-color: var(--activity-1);
+}
+
+.grid-cell[data-activity="2"] {
+  background-color: var(--activity-2);
+}
+
+.grid-cell[data-activity="3"] {
+  background-color: var(--activity-3);
+}
+
+.grid-cell[data-activity="4"] {
+  background-color: var(--activity-4);
+}
+
+.grid-cell[data-activity="-1"] {
+  background-color: transparent;
+}

@@ -1,0 +1,167 @@
+.calendar {
+  background-color: var(--bg-primary);
+  padding: var(--spacing-lg);
+  overflow-y: auto;
+  height: calc(100vh - 64px);
+  border-right: var(--border-medium) solid #000000;
+}
+
+.calendar-compose {
+  margin-bottom: var(--spacing-xl);
+}
+
+.calendar-header {
+  margin-bottom: var(--spacing-lg);
+  padding: 0 var(--spacing-sm);
+}
+
+.year-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.months-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+}
+
+.month-section {
+  padding-bottom: var(--spacing-lg);
+}
+
+.month-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: var(--spacing-sm);
+}
+
+.month-name {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.3px;
+}
+
+.month-year {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.calendar-grid {
+  width: 100%;
+}
+
+.weekday-row {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  margin-bottom: var(--spacing-xs);
+  border-bottom: 1px solid #000000;
+  padding-bottom: var(--spacing-xs);
+}
+
+.weekday-row span {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-align: center;
+  padding: var(--spacing-xs) 0;
+}
+
+.week-row {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  padding: 2px 0;
+}
+
+.week-row:last-child {
+  border-bottom: none;
+}
+
+.day-cell {
+  aspect-ratio: 1;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-primary);
+  position: relative;
+}
+
+
+/* Activity indicator - full box highlight */
+.day-cell[data-activity="1"],
+.day-cell[data-activity="2"],
+.day-cell[data-activity="3"],
+.day-cell[data-activity="4"] {
+  background-color: #2afea1;
+}
+
+/* Selected state overrides activity indicator */
+.day-cell.selected,
+.day-cell.selected[data-activity="1"],
+.day-cell.selected[data-activity="2"],
+.day-cell.selected[data-activity="3"],
+.day-cell.selected[data-activity="4"] {
+  background-color: var(--highlight-color);
+  color: var(--text-primary);
+}
+
+.day-cell.today {
+  font-weight: 700;
+  background-color: var(--today-color);
+}
+
+/* Today when selected uses yellow */
+.day-cell.today.selected,
+.day-cell.today.selected[data-activity="1"],
+.day-cell.today.selected[data-activity="2"],
+.day-cell.today.selected[data-activity="3"],
+.day-cell.today.selected[data-activity="4"] {
+  background-color: var(--today-color);
+}
+
+/* Empty cells for other-month days */
+.day-cell.empty {
+  cursor: default;
+  background: transparent !important;
+}
+
+/* Drag and drop states */
+.day-cell.drag-over {
+  background-color: var(--highlight-color) !important;
+  transform: scale(1.1);
+  transition: transform 0.1s, background-color 0.1s;
+}
+
+.day-cell.empty.drag-over {
+  background: transparent !important;
+  transform: none;
+}
+
+@media (max-width: 900px) {
+  .calendar {
+    height: auto;
+    border-right: none;
+    border-bottom: var(--border-medium) solid #000000;
+  }
+
+  .month-name {
+    font-size: 22px;
+  }
+
+  .day-cell {
+    font-size: 12px;
+  }
+}

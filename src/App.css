@@ -1,0 +1,128 @@
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* Colors */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f9fafb;
+  --border-color: #e5e7eb;
+  --border-thick: #000000;
+  --text-primary: #111827;
+  --text-secondary: #6b7280;
+  --text-muted: #9ca3af;
+
+  /* Activity colors (green intensity) */
+  --activity-0: #ebedf0;
+  --activity-1: #9be9a8;
+  --activity-2: #40c463;
+  --activity-3: #30a14e;
+  --activity-4: #216e39;
+
+  /* Accent colors */
+  --accent-primary: #3b82f6;
+  --accent-success: #10b981;
+  --accent-warning: #f59e0b;
+  --accent-danger: #ef4444;
+
+  /* Tag colors from design */
+  --tag-blue: #929ee8;
+  --tag-peach: #e0bc9e;
+  --tag-mint: #6eebc8;
+  --tag-pink: #d8a0d8;
+  --tag-yellow: #fbee5d;
+
+  /* Today highlight */
+  --today-color: #fbee5d;
+
+  /* Calendar highlight */
+  --highlight-color: #dba2fc;
+
+  /* Spacing */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+
+  /* Border radius */
+  --radius-sm: 0;
+  --radius-md: 0;
+  --radius-lg: 0;
+
+  /* Border widths */
+  --border-thin: 1px;
+  --border-medium: 1px;
+  --border-thick: 2px;
+
+  /* Font */
+  --font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: #f5f5f5;
+  background-image: radial-gradient(circle, #cccccc 1px, transparent 1px);
+  background-size: 16px 16px;
+  color: var(--text-primary);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  padding: var(--spacing-xl);
+}
+
+/* Main 3-column layout */
+.app {
+  display: grid;
+  grid-template-columns: 260px 1fr 1fr;
+  max-width: 1400px;
+  margin: 0 auto;
+  min-height: calc(100vh - 64px);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: var(--border-medium) solid #000000;
+}
+
+/* Responsive design */
+@media (max-width: 1200px) {
+  .app {
+    grid-template-columns: 220px 1fr 1fr;
+  }
+}
+
+@media (max-width: 900px) {
+  .app {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto 1fr;
+  }
+
+  body {
+    padding: var(--spacing-md);
+  }
+}
+
+/* Utility classes */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Hide all scrollbars */
+::-webkit-scrollbar {
+  display: none;
+}
+
+* {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
