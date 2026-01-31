@@ -1,5 +1,5 @@
 -- ============================================
--- MEMENTO MULTI-USER SETUP
+-- BOTSO MULTI-USER SETUP
 -- Run these commands in your Supabase SQL Editor
 -- ============================================
 

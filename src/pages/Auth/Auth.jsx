@@ -54,7 +54,7 @@ function Auth() {
     return (
       <div className="auth">
         <div className="auth-container">
-          <Link to="/" className="auth-logo">Memento</Link>
+          <Link to="/" className="auth-logo">Botso</Link>
           <div className="auth-confirmation">
             <h1>Check your email</h1>
             <p>
@@ -71,7 +71,7 @@ function Auth() {
   return (
     <div className="auth">
       <div className="auth-container">
-        <Link to="/" className="auth-logo">Memento</Link>
+        <Link to="/" className="auth-logo">Botso</Link>
 
         <h1>{isLogin ? 'Welcome back' : 'Create an account'}</h1>
         <p className="auth-subtitle">

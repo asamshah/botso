@@ -35,7 +35,7 @@ function Landing() {
   return (
     <div className="landing">
       <header className="landing-header">
-        <div className="landing-logo">Memento</div>
+        <div className="landing-logo">Botso</div>
         <Link to="/login" className="landing-auth-btn">Sign in</Link>
       </header>
 
@@ -50,7 +50,7 @@ function Landing() {
           <div className="landing-screenshot">
             <img
               src="/screenshot.png"
-              alt="Memento app interface showing calendar and journal entries"
+              alt="Botso app interface showing calendar and journal entries"
             />
           </div>
 
