@@ -1,10 +1,12 @@
 import { useState, useRef } from 'react'
 import { format } from 'date-fns'
 import { supabase } from '../../lib/supabase'
+import { useAuth } from '../../context/AuthContext'
 import { getTagColorClass } from '../../lib/tagColors'
 import './EntryInput.css'
 
 function EntryInput({ selectedDate, onEntryAdded, initialContent = '', initialTags = [], initialReminder = false, initialAttachments = [], entryId = null, onCancel = null }) {
+  const { user } = useAuth()
   const [content, setContent] = useState(initialContent)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [attachments, setAttachments] = useState(() => {
@@ -284,7 +286,8 @@ function EntryInput({ selectedDate, onEntryAdded, initialContent = '', initialTa
           entry_type: 'todo',
           is_completed: false,
           tags: tags.length > 0 ? tags : null,
-          is_reminder: isReminder
+          is_reminder: isReminder,
+          user_id: user.id
         })
 
       if (!error) {

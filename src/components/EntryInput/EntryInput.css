@@ -199,8 +199,21 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: background-color 0.15s ease, transform 0.1s ease;
 }
 
+.post-btn:hover:not(:disabled) {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+.post-btn:hover:not(:disabled) svg {
+  stroke: #ffffff;
+}
+
+.post-btn:active:not(:disabled) {
+  transform: scale(0.95);
+}
 
 .post-btn:disabled {
   opacity: 0.3;

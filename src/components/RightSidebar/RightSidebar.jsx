@@ -27,13 +27,12 @@ function RightSidebar({ selectedDate, refreshKey, onEntryUpdated, searchQuery, s
         .eq('date', dateStr)
         .order('created_at', { ascending: false })
 
-      // Fetch month entries (excluding selected day)
+      // Fetch all month entries
       const { data: monthData, error: monthError } = await supabase
         .from('entries')
         .select('*')
         .gte('date', monthStart)
         .lte('date', monthEnd)
-        .neq('date', dateStr)
         .order('date', { ascending: false })
         .order('created_at', { ascending: false })
 
@@ -158,7 +157,7 @@ function RightSidebar({ selectedDate, refreshKey, onEntryUpdated, searchQuery, s
           {!loading && filteredMonthEntries.length === 0 ? (
             <div className="empty-state">
               <p className="empty-hint">
-                {hasActiveFilters ? 'No matching entries' : 'No other posts this month'}
+                {hasActiveFilters ? 'No matching entries' : 'No posts this month'}
               </p>
             </div>
           ) : (

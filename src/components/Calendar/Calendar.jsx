@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useRef } from 'react'
 import {
   format,
   startOfMonth,
@@ -20,6 +20,8 @@ function Calendar({ selectedDate, onDateSelect, refreshKey, onEntryAdded, onEntr
   const [activityData, setActivityData] = useState({})
   const [dragOverDate, setDragOverDate] = useState(null)
   const currentYear = new Date().getFullYear()
+  const currentMonth = new Date().getMonth()
+  const monthRefs = useRef([])
 
   // Generate calendar data for all 12 months
   const allMonths = useMemo(() => {
@@ -61,6 +63,17 @@ function Calendar({ selectedDate, onDateSelect, refreshKey, onEntryAdded, onEntr
   useEffect(() => {
     fetchActivityData()
   }, [currentYear, refreshKey])
+
+  // Scroll to current month on mount
+  useEffect(() => {
+    const calendarEl = document.querySelector('.calendar')
+    const composeEl = document.querySelector('.calendar-compose')
+    if (monthRefs.current[currentMonth] && calendarEl && composeEl) {
+      const composeHeight = composeEl.offsetHeight
+      const monthTop = monthRefs.current[currentMonth].offsetTop
+      calendarEl.scrollTop = monthTop - composeHeight - 24
+    }
+  }, [])
 
   async function fetchActivityData() {
     const startDate = `${currentYear}-01-01`
@@ -127,7 +140,11 @@ function Calendar({ selectedDate, onDateSelect, refreshKey, onEntryAdded, onEntr
       
       <div className="months-container">
         {allMonths.map((month, monthIndex) => (
-          <section key={monthIndex} className="month-section">
+          <section
+            key={monthIndex}
+            className="month-section"
+            ref={el => monthRefs.current[monthIndex] = el}
+          >
             <div className="month-header-row">
               <h2 className="month-name">{month.name}</h2>
               <span className="month-year">{currentYear}</span>
