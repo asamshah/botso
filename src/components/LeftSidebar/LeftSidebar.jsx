@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { supabase } from '../../lib/supabase'
 import { getTagColor } from '../../lib/tagColors'
+import jotsoLogo from '../../assets/jotso.svg'
 import './LeftSidebar.css'
 
 const DEFAULT_PROFILE = {
@@ -211,66 +212,7 @@ function LeftSidebar({ searchQuery, onSearchChange, selectedTags, onTagSelect, r
   return (
     <aside className="left-sidebar">
       <div className="profile-section">
-        <div className="profile-avatar" onClick={handleAvatarClick}>
-          {profile.avatar_url ? (
-            <>
-              <img src={profile.avatar_url} alt={profile.name} />
-              <div className="avatar-overlay">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
-                  <circle cx="12" cy="13" r="4"/>
-                </svg>
-              </div>
-            </>
-          ) : (
-            <div className="avatar-placeholder">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
-                <circle cx="12" cy="13" r="4"/>
-              </svg>
-            </div>
-          )}
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept="image/*"
-            onChange={handleAvatarChange}
-            style={{ display: 'none' }}
-          />
-        </div>
-
-        {isEditingName ? (
-          <input
-            ref={nameInputRef}
-            type="text"
-            className="profile-name-input"
-            value={editName}
-            onChange={(e) => setEditName(e.target.value)}
-            onBlur={handleNameSave}
-            onKeyDown={handleNameKeyDown}
-          />
-        ) : (
-          <h2 className="profile-name" onClick={handleNameClick} style={{ cursor: 'pointer' }}>
-            {profile.name}
-          </h2>
-        )}
-
-        {isEditingBio ? (
-          <textarea
-            ref={bioInputRef}
-            className="profile-bio-input"
-            value={editBio}
-            onChange={(e) => setEditBio(e.target.value)}
-            onBlur={handleBioSave}
-            onKeyDown={handleBioKeyDown}
-            rows={2}
-          />
-        ) : (
-          <p className="profile-bio" onClick={handleBioClick}>
-            {profile.bio || 'Click to add bio'}
-          </p>
-        )}
-
+        <img src={jotsoLogo} alt="Jotso" className="sidebar-logo" />
       </div>
 
       <div className="search-section">
@@ -360,11 +302,15 @@ function LeftSidebar({ searchQuery, onSearchChange, selectedTags, onTagSelect, r
 
       <div className="sidebar-footer">
         <button className="sign-out-btn" onClick={onSignOut}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-            <polyline points="16 17 21 12 16 7"/>
-            <line x1="21" y1="12" x2="9" y2="12"/>
-          </svg>
+          {profile.avatar_url ? (
+            <img src={profile.avatar_url} alt={profile.name} className="sign-out-avatar" />
+          ) : (
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+              <polyline points="16 17 21 12 16 7"/>
+              <line x1="21" y1="12" x2="9" y2="12"/>
+            </svg>
+          )}
           Sign out
         </button>
       </div>

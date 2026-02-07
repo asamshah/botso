@@ -151,7 +151,7 @@ function LinkPreview({ url }) {
 function EntryItem({ entry, onDelete, onUpdate, onPostClick }) {
   const [isEditing, setIsEditing] = useState(false)
   const [isDragging, setIsDragging] = useState(false)
-  const [isExpanded, setIsExpanded] = useState(false)
+  const [isExpanded, setIsExpanded] = useState(true)
   const [completedTodos, setCompletedTodos] = useState(() => {
     // Load completed state from entry or initialize empty
     try {
@@ -268,10 +268,10 @@ function EntryItem({ entry, onDelete, onUpdate, onPostClick }) {
     images.length > 1 ||
     otherFiles.length > 0
 
-  const displayBlocks = isExpanded ? processedBlocks : processedBlocks.slice(0, 2)
-  const displayImages = isExpanded ? images : images.slice(0, 1)
-  const displayTodos = isExpanded ? allTodos : []
-  const displayFiles = isExpanded ? otherFiles : []
+  const displayBlocks = processedBlocks
+  const displayImages = images
+  const displayTodos = allTodos
+  const displayFiles = otherFiles
 
   if (isEditing) {
     return (
@@ -391,17 +391,6 @@ function EntryItem({ entry, onDelete, onUpdate, onPostClick }) {
         </div>
       )}
 
-      {hasMoreContent && (
-        <button
-          className="expand-btn"
-          onClick={(e) => {
-            e.stopPropagation()
-            setIsExpanded(!isExpanded)
-          }}
-        >
-          {isExpanded ? 'Show less' : 'Show more'}
-        </button>
-      )}
 
       {tags && tags.length > 0 && (
         <div className="post-tags">

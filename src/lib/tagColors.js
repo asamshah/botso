@@ -2,33 +2,38 @@
 // This ensures the same tag always gets the same color across the app
 
 const TAG_COLORS = [
-  'var(--tag-blue)',    // #929ee8
-  'var(--tag-peach)',   // #e0bc9e
-  'var(--tag-mint)',    // #6eebc8
-  'var(--tag-pink)',    // #d8a0d8
-  'var(--tag-yellow)',  // #fbee5d
+  'var(--tag-blue)',        // light cyan
+  'var(--tag-periwinkle)',  // light periwinkle
+  'var(--tag-lavender)',    // light lavender
+  'var(--tag-pink)',        // light pink
+  'var(--tag-rose)',        // light rose
+  'var(--tag-peach)',       // light peach
+  'var(--tag-yellow)',      // light yellow
+  'var(--tag-mint)',        // light mint
+  'var(--tag-coral)',       // light coral
+  'var(--tag-sky)',         // light sky blue
+  'var(--tag-lilac)',       // light lilac
+  'var(--tag-lime)',        // light lime
 ]
 
-// Simple hash function for consistent color assignment
+const COLOR_CLASSES = ['blue', 'periwinkle', 'lavender', 'pink', 'rose', 'peach', 'yellow', 'mint', 'coral', 'sky', 'lilac', 'lime']
+
 function hashString(str) {
   let hash = 0
   for (let i = 0; i < str.length; i++) {
-    const char = str.charCodeAt(i)
-    hash = ((hash << 5) - hash) + char
-    hash = hash & hash // Convert to 32bit integer
+    hash = hash * 169 + str.charCodeAt(i)
   }
-  return Math.abs(hash)
+  return Math.abs(hash) % COLOR_CLASSES.length
 }
 
 export function getTagColor(tagName) {
-  const index = hashString(tagName.toLowerCase()) % TAG_COLORS.length
+  const index = hashString(tagName.toLowerCase())
   return TAG_COLORS[index]
 }
 
 export function getTagColorClass(tagName) {
-  const colors = ['blue', 'peach', 'mint', 'pink', 'yellow']
-  const index = hashString(tagName.toLowerCase()) % colors.length
-  return colors[index]
+  const index = hashString(tagName.toLowerCase())
+  return COLOR_CLASSES[index]
 }
 
 export { TAG_COLORS }

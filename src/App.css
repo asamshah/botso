@@ -28,12 +28,19 @@
   --accent-warning: #f59e0b;
   --accent-danger: #ef4444;
 
-  /* Tag colors from design */
-  --tag-blue: #929ee8;
-  --tag-peach: #e0bc9e;
-  --tag-mint: #6eebc8;
-  --tag-pink: #d8a0d8;
-  --tag-yellow: #fbee5d;
+  /* Tag colors - soft pastels */
+  --tag-blue: #c8efff;
+  --tag-periwinkle: #d4e0ff;
+  --tag-lavender: #ecd8ff;
+  --tag-pink: #ffd6ec;
+  --tag-rose: #ffd0d8;
+  --tag-peach: #ffe8d0;
+  --tag-yellow: #fff4c8;
+  --tag-mint: #d0ffe0;
+  --tag-coral: #ffccc8;
+  --tag-sky: #b8e8ff;
+  --tag-lilac: #e0c8ff;
+  --tag-lime: #e0ffc8;
 
   /* Today highlight */
   --today-color: #fbee5d;

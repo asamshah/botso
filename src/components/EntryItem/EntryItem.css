@@ -357,13 +357,13 @@
   color: #1a1a2e;
 }
 
-.post-tag.tag-peach {
-  background-color: var(--tag-peach);
+.post-tag.tag-periwinkle {
+  background-color: var(--tag-periwinkle);
   color: #1a1a2e;
 }
 
-.post-tag.tag-mint {
-  background-color: var(--tag-mint);
+.post-tag.tag-lavender {
+  background-color: var(--tag-lavender);
   color: #1a1a2e;
 }
 
@@ -372,8 +372,43 @@
   color: #1a1a2e;
 }
 
+.post-tag.tag-rose {
+  background-color: var(--tag-rose);
+  color: #1a1a2e;
+}
+
+.post-tag.tag-peach {
+  background-color: var(--tag-peach);
+  color: #1a1a2e;
+}
+
 .post-tag.tag-yellow {
   background-color: var(--tag-yellow);
+  color: #1a1a2e;
+}
+
+.post-tag.tag-mint {
+  background-color: var(--tag-mint);
+  color: #1a1a2e;
+}
+
+.post-tag.tag-coral {
+  background-color: var(--tag-coral);
+  color: #1a1a2e;
+}
+
+.post-tag.tag-sky {
+  background-color: var(--tag-sky);
+  color: #1a1a2e;
+}
+
+.post-tag.tag-lilac {
+  background-color: var(--tag-lilac);
+  color: #1a1a2e;
+}
+
+.post-tag.tag-lime {
+  background-color: var(--tag-lime);
   color: #1a1a2e;
 }
 
