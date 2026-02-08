@@ -47,12 +47,17 @@
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  padding: var(--spacing-lg) 0 var(--spacing-md);
+  padding: var(--spacing-md) 0;
   border-bottom: 1px solid #000000;
   position: sticky;
   top: 0;
   background-color: #f7f6f3;
   z-index: 10;
+  margin-left: calc(-1 * var(--spacing-lg));
+  margin-right: calc(-1 * var(--spacing-lg));
+  padding-left: var(--spacing-lg);
+  padding-right: var(--spacing-lg);
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .month-label {
