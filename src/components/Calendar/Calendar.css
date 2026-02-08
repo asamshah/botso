@@ -122,7 +122,7 @@
 .day-cell[data-activity="2"],
 .day-cell[data-activity="3"],
 .day-cell[data-activity="4"] {
-  background-color: #2afea1;
+  background-color: var(--tag-sky);
 }
 
 /* Selected state overrides activity indicator */

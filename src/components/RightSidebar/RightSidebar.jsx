@@ -182,6 +182,7 @@ function RightSidebar({ selectedDate, refreshKey, onEntryUpdated, searchQuery, s
                           onDelete={handleDelete}
                           onUpdate={onEntryUpdated}
                           onPostClick={onPostClick}
+                          hideActions
                         />
                       ))}
                     </div>

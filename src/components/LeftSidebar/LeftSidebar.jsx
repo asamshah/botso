@@ -14,6 +14,7 @@ function LeftSidebar({ searchQuery, onSearchChange, selectedTags, onTagSelect, r
   const [profile, setProfile] = useState(DEFAULT_PROFILE)
   const [allTags, setAllTags] = useState([])
   const [reminders, setReminders] = useState([])
+  const [timeReminders, setTimeReminders] = useState([])
   const [isEditingName, setIsEditingName] = useState(false)
   const [isEditingBio, setIsEditingBio] = useState(false)
   const [editName, setEditName] = useState(profile.name)
@@ -27,6 +28,7 @@ function LeftSidebar({ searchQuery, onSearchChange, selectedTags, onTagSelect, r
     fetchProfile()
     fetchTags()
     fetchReminders()
+    fetchTimeReminders()
   }, [refreshKey])
 
   useEffect(() => {
@@ -69,6 +71,18 @@ function LeftSidebar({ searchQuery, onSearchChange, selectedTags, onTagSelect, r
 
     if (data && !error) {
       setReminders(data)
+    }
+  }
+
+  async function fetchTimeReminders() {
+    const { data, error } = await supabase
+      .from('entries')
+      .select('id, title, date, reminder_time')
+      .not('reminder_time', 'is', null)
+      .order('date', { ascending: true })
+
+    if (data && !error) {
+      setTimeReminders(data)
     }
   }
 
@@ -215,6 +229,7 @@ function LeftSidebar({ searchQuery, onSearchChange, selectedTags, onTagSelect, r
         <img src={jotsoLogo} alt="Jotso" className="sidebar-logo" />
       </div>
 
+      <div className="sidebar-scrollable">
       <div className="search-section">
         <div className="search-input-wrapper">
           <svg className="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -279,6 +294,28 @@ function LeftSidebar({ searchQuery, onSearchChange, selectedTags, onTagSelect, r
         )}
       </div>
 
+      {timeReminders.length > 0 && (
+        <div className="reminders-section">
+          <h3 className="section-title">Reminders</h3>
+          <div className="reminders-list">
+            {timeReminders.map(reminder => (
+              <button
+                key={reminder.id}
+                className="reminder-item"
+                onClick={() => onReminderClick && onReminderClick(reminder.date)}
+              >
+                <svg className="reminder-clock-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <circle cx="12" cy="12" r="10"/>
+                  <polyline points="12 6 12 12 16 14"/>
+                </svg>
+                <span className="reminder-title">{reminder.title}</span>
+                <span className="reminder-time">{reminder.reminder_time}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
       {reminders.length > 0 && (
         <div className="pinned-section">
           <h3 className="section-title">Pinned</h3>
@@ -299,6 +336,7 @@ function LeftSidebar({ searchQuery, onSearchChange, selectedTags, onTagSelect, r
           </div>
         </div>
       )}
+      </div>
 
       <div className="sidebar-footer">
         <button className="sign-out-btn" onClick={onSignOut}>

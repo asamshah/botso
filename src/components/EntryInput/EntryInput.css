@@ -360,3 +360,59 @@
   background-color: rgba(239, 68, 68, 0.1);
   color: var(--accent-danger);
 }
+
+.format-btn.clock-active {
+  background-color: rgba(59, 130, 246, 0.1);
+  color: #3b82f6;
+}
+
+/* Time Picker */
+.time-picker-wrapper {
+  position: relative;
+}
+
+.time-picker-popup {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--bg-primary);
+  border: 1px solid #000000;
+  border-radius: var(--radius-md);
+  padding: var(--spacing-sm);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 10;
+}
+
+.time-picker-input {
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 6px 8px;
+  font-size: 14px;
+  font-family: var(--font-family);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.time-picker-input:focus {
+  outline: none;
+  border-color: #000000;
+}
+
+.time-picker-clear {
+  background: none;
+  border: none;
+  font-size: 12px;
+  font-family: var(--font-family);
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 4px 8px;
+  white-space: nowrap;
+}
+
+.time-picker-clear:hover {
+  color: var(--accent-danger);
+}

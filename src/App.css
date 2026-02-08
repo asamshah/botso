@@ -43,10 +43,10 @@
   --tag-lime: #e0ffc8;
 
   /* Today highlight */
-  --today-color: #fbee5d;
+  --today-color: var(--tag-peach);
 
   /* Calendar highlight */
-  --highlight-color: #dba2fc;
+  --highlight-color: var(--tag-lavender);
 
   /* Spacing */
   --spacing-xs: 4px;

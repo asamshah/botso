@@ -5,7 +5,7 @@ import { useAuth } from '../../context/AuthContext'
 import { getTagColorClass } from '../../lib/tagColors'
 import './EntryInput.css'
 
-function EntryInput({ selectedDate, onEntryAdded, initialContent = '', initialTags = [], initialReminder = false, initialAttachments = [], entryId = null, onCancel = null }) {
+function EntryInput({ selectedDate, onEntryAdded, initialContent = '', initialTags = [], initialReminder = false, initialReminderTime = null, initialAttachments = [], entryId = null, onCancel = null }) {
   const { user } = useAuth()
   const [content, setContent] = useState(initialContent)
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -23,9 +23,12 @@ function EntryInput({ selectedDate, onEntryAdded, initialContent = '', initialTa
   const [tagInput, setTagInput] = useState('')
   const [showTagInput, setShowTagInput] = useState(false)
   const [isReminder, setIsReminder] = useState(initialReminder)
+  const [reminderTime, setReminderTime] = useState(initialReminderTime || '')
+  const [showTimePicker, setShowTimePicker] = useState(false)
   const textareaRef = useRef(null)
   const fileInputRef = useRef(null)
   const tagInputRef = useRef(null)
+  const timePickerRef = useRef(null)
 
   const insertFormatting = (before, after = '') => {
     const textarea = textareaRef.current
@@ -262,7 +265,8 @@ function EntryInput({ selectedDate, onEntryAdded, initialContent = '', initialTa
           title: content.trim(),
           description: attachmentsJson || undefined,
           tags: tags.length > 0 ? tags : null,
-          is_reminder: isReminder
+          is_reminder: isReminder,
+          reminder_time: reminderTime || null
         })
         .eq('id', entryId)
 
@@ -287,6 +291,7 @@ function EntryInput({ selectedDate, onEntryAdded, initialContent = '', initialTa
           is_completed: false,
           tags: tags.length > 0 ? tags : null,
           is_reminder: isReminder,
+          reminder_time: reminderTime || null,
           user_id: user.id
         })
 
@@ -300,6 +305,8 @@ function EntryInput({ selectedDate, onEntryAdded, initialContent = '', initialTa
         setTagInput('')
         setShowTagInput(false)
         setIsReminder(false)
+        setReminderTime('')
+        setShowTimePicker(false)
         onEntryAdded()
       } else {
         console.error('Error posting:', error)
@@ -483,6 +490,29 @@ function EntryInput({ selectedDate, onEntryAdded, initialContent = '', initialTa
               <path d="M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z"/>
             </svg>
           </button>
+          <div className="time-picker-wrapper" ref={timePickerRef}>
+            <button type="button" className={`format-btn ${reminderTime ? 'active clock-active' : ''}`} title="Set reminder time" onClick={() => setShowTimePicker(!showTimePicker)}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12 6 12 12 16 14"/>
+              </svg>
+            </button>
+            {showTimePicker && (
+              <div className="time-picker-popup">
+                <input
+                  type="time"
+                  value={reminderTime}
+                  onChange={(e) => setReminderTime(e.target.value)}
+                  className="time-picker-input"
+                />
+                {reminderTime && (
+                  <button type="button" className="time-picker-clear" onClick={() => { setReminderTime(''); setShowTimePicker(false) }}>
+                    Clear
+                  </button>
+                )}
+              </div>
+            )}
+          </div>
           <input
             ref={fileInputRef}
             type="file"

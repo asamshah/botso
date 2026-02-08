@@ -17,13 +17,9 @@
 
 /* Tweek.so-style date header */
 .date-header {
-  padding: var(--spacing-lg);
-  padding-bottom: var(--spacing-md);
-  padding-left: 0;
-  padding-right: 0;
-  border-bottom: 1px solid #000000;
+  padding: var(--spacing-lg) 0 var(--spacing-md) 0;
+  border-bottom: none;
   margin: 0;
-  margin-top: var(--spacing-lg);
   display: flex;
   justify-content: space-between;
   align-items: baseline;
@@ -51,12 +47,8 @@
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  padding: var(--spacing-lg);
-  padding-bottom: var(--spacing-md);
-  padding-left: 0;
-  padding-right: 0;
+  padding: var(--spacing-lg) 0 var(--spacing-md);
   border-bottom: 1px solid #000000;
-  margin: 0;
   position: sticky;
   top: 0;
   background-color: #f7f6f3;
@@ -148,6 +140,14 @@
 
 .right-sidebar .month-section .post {
   background-color: #f7f6f3;
+}
+
+.right-sidebar .month-section .post::before {
+  background-color: #000000;
+}
+
+.right-sidebar .month-section .date-group:first-child .posts-list .post:first-child::before {
+  display: none;
 }
 
 @media (max-width: 900px) {

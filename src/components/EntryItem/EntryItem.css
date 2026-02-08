@@ -28,6 +28,7 @@
   border: 1px solid var(--border-color);
   transform: scale(1.02);
   z-index: 100;
+  padding: var(--spacing-md);
 }
 
 .post-content {
@@ -430,6 +431,15 @@
   color: var(--accent-danger);
 }
 
+.clock-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  color: #3b82f6;
+  font-size: 12px;
+  font-weight: 500;
+}
+
 .post-actions {
   display: flex;
   gap: var(--spacing-xs);
@@ -460,10 +470,16 @@
   padding: 0;
   border: none;
   background: transparent;
+  overflow: visible;
+}
+
+.post.editing::before {
+  display: none;
 }
 
 .post.editing .compose-box {
   margin-bottom: 0;
+  margin-top: var(--spacing-sm);
 }
 
 .post-content {
